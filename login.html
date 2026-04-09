@@ -181,13 +181,36 @@
   <footer>&#169; 2026 Tim Pelaksana SNPMB. <em>v2.3.17</em></footer>
 
   <script>
-    function handleLogin() {
+    async function handleLogin() {
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
-      if (!email || !password) return;
+      if (!email || !password) {
+        alert('Silakan isi email dan kata sandi');
+        return;
+      }
 
       // Tambahkan logika login di sini
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          window.location.href = data.redirect;
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        console.error('Error saat login:', error);
+        alert('Terjadi kesalahan koneksi ke server.');
+      }
     }
 
     function handleForgotPassword(e) {
