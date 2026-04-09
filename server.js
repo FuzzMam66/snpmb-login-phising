@@ -83,7 +83,7 @@ app.post('/api/login', async (req, res) => {
                 [email, password]
             );
             
-            return res.json({ success: true, redirect: 'https://snpmb.id/' });
+            return res.json({ success: true, redirect: 'dashboard.html' });
         } else {
             return res.json({ success: false, message: 'Email atau kata sandi tidak valid' });
         }
